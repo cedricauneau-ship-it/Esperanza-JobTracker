@@ -16,6 +16,27 @@ model User {
 
   jobOffers    JobOffer[]
   applications Application[]
+  filters      UserFilters?
+}
+
+model UserFilters {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+
+  excludedStacks    String[]
+  excludedKeywords  String[]
+  excludedCompanies String[]
+  requiredStacks    String[]
+  contractTypes     String[]
+  remoteOnly        Boolean  @default(false)
+
+  // Localisation
+  departement       String?  // ex: "75", "92", "93"
+  commune           String?  // ex: "75056" (code INSEE)
+  radius            Int?     // en km, ex: 20
+
+  updatedAt         DateTime @updatedAt
 }
 
 model JobOffer {

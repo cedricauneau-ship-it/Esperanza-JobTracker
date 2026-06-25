@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  UserFilters: 'UserFilters',
   JobOffer: 'JobOffer',
   Application: 'Application',
   Interview: 'Interview'
@@ -82,6 +83,24 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserFiltersScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  excludedStacks: 'excludedStacks',
+  excludedKeywords: 'excludedKeywords',
+  excludedCompanies: 'excludedCompanies',
+  requiredStacks: 'requiredStacks',
+  contractTypes: 'contractTypes',
+  remoteOnly: 'remoteOnly',
+  departement: 'departement',
+  commune: 'commune',
+  radius: 'radius',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserFiltersScalarFieldEnum = (typeof UserFiltersScalarFieldEnum)[keyof typeof UserFiltersScalarFieldEnum]
 
 
 export const JobOfferScalarFieldEnum = {

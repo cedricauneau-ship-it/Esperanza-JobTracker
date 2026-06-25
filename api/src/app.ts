@@ -1,6 +1,8 @@
 import express from 'express'
 import 'dotenv/config'
 import usersRouter from './users/users.router'
+import jobsRouter from './jobs/jobs.router'
+import filtersRouter from './filters/filters.router'
 
 const app = express()
 
@@ -11,6 +13,8 @@ app.get('/health', (req, res) => {
 })
 
 app.use('/users', usersRouter)
+app.use('/jobs', jobsRouter)
+app.use('/filters', filtersRouter)
 
 const PORT = process.env.PORT || 3000
 

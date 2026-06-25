@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  UserFilters: 'UserFilters',
   JobOffer: 'JobOffer',
   Application: 'Application',
   Interview: 'Interview'
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "jobOffer" | "application" | "interview"
+    modelProps: "user" | "userFilters" | "jobOffer" | "application" | "interview"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserFilters: {
+      payload: Prisma.$UserFiltersPayload<ExtArgs>
+      fields: Prisma.UserFiltersFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserFiltersFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserFiltersFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>
+        }
+        findFirst: {
+          args: Prisma.UserFiltersFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserFiltersFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>
+        }
+        findMany: {
+          args: Prisma.UserFiltersFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>[]
+        }
+        create: {
+          args: Prisma.UserFiltersCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>
+        }
+        createMany: {
+          args: Prisma.UserFiltersCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserFiltersCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>[]
+        }
+        delete: {
+          args: Prisma.UserFiltersDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>
+        }
+        update: {
+          args: Prisma.UserFiltersUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserFiltersDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserFiltersUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserFiltersUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserFiltersUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserFiltersPayload>
+        }
+        aggregate: {
+          args: Prisma.UserFiltersAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserFilters>
+        }
+        groupBy: {
+          args: Prisma.UserFiltersGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserFiltersGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserFiltersCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserFiltersCountAggregateOutputType> | number
         }
       }
     }
@@ -753,6 +828,24 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const UserFiltersScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  excludedStacks: 'excludedStacks',
+  excludedKeywords: 'excludedKeywords',
+  excludedCompanies: 'excludedCompanies',
+  requiredStacks: 'requiredStacks',
+  contractTypes: 'contractTypes',
+  remoteOnly: 'remoteOnly',
+  departement: 'departement',
+  commune: 'commune',
+  radius: 'radius',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserFiltersScalarFieldEnum = (typeof UserFiltersScalarFieldEnum)[keyof typeof UserFiltersScalarFieldEnum]
+
+
 export const JobOfferScalarFieldEnum = {
   id: 'id',
   externalId: 'externalId',
@@ -875,6 +968,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -986,6 +1093,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  userFilters?: Prisma.UserFiltersOmit
   jobOffer?: Prisma.JobOfferOmit
   application?: Prisma.ApplicationOmit
   interview?: Prisma.InterviewOmit

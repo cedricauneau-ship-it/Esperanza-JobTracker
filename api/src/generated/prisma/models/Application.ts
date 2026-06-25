@@ -454,10 +454,6 @@ export type ApplicationUncheckedUpdateOneWithoutJobOfferNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutJobOfferInput, Prisma.ApplicationUpdateWithoutJobOfferInput>, Prisma.ApplicationUncheckedUpdateWithoutJobOfferInput>
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ApplicationCreateNestedOneWithoutInterviewsInput = {
   create?: Prisma.XOR<Prisma.ApplicationCreateWithoutInterviewsInput, Prisma.ApplicationUncheckedCreateWithoutInterviewsInput>
   connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutInterviewsInput
