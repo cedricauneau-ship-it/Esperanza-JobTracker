@@ -1,6 +1,6 @@
 # Esperanza — Job Tracker
 
-> 🚧 **Projet en cours de développement** — backend en place, web et mobile à venir.
+> 🚧 **Projet en cours de développement** — backend ~70% terminé, web et mobile à venir.
 
 Application fullstack de suivi de recherche d'emploi — scraping automatique des offres, gestion des candidatures et rappels de relance.
 
@@ -26,9 +26,10 @@ Construite en autonomie avec Node.js / TypeScript / React Native / Next.js.
 ## Fonctionnalités
 
 - **Scraping automatique** — France Travail (API officielle), WTTJ (Playwright), BetaGouv
-- **Filtrage intelligent** — élimination automatique des offres hors stack (Java, PHP, Angular, .NET...) et des postes senior
+- **Filtres personnalisés par utilisateur** — stacks exclues, mots-clés, entreprises, zone géographique, télétravail
 - **Suivi des candidatures** — statuts (à lire, postulée, entretien, refus, offre)
 - **Rappels de relance** — alerte automatique à J+7 si pas de réponse
+- **Pagination** — 30 offres par page
 - **Multi-utilisateurs** — comptes isolés, données strictement séparées
 - **Dashboard web** — vue d'ensemble sur PC
 - **App mobile** — consultation et mise à jour des statuts sur iOS / Android
@@ -41,10 +42,12 @@ Construite en autonomie avec Node.js / TypeScript / React Native / Next.js.
 |---|---|
 | Auth (signup, signin, refresh token) | ✅ Terminé |
 | Modèle de données (Prisma) | ✅ Terminé |
-| CRUD offres d'emploi | 🔄 En cours |
-| Scraper France Travail | 🔄 En cours |
-| Scraper WTTJ | ⏳ À venir |
-| Scraper BetaGouv | ⏳ À venir |
+| CRUD offres d'emploi | ✅ Terminé |
+| Filtres utilisateur (CRUD + localisation) | ✅ Terminé |
+| Pagination des offres | ✅ Terminé |
+| Scraper France Travail | ✅ Terminé |
+| Scraper WTTJ | 🔄 En cours |
+| Scraper BetaGouv | 🔄 En cours |
 | Cron job (scraping + rappels) | ⏳ À venir |
 | Dashboard web (Next.js) | ⏳ À venir |
 | App mobile (React Native) | ⏳ À venir |
@@ -76,7 +79,7 @@ api/src/
 │   ├── francetravail/          # API officielle France Travail
 │   ├── wttj/                   # Scraping WTTJ via Playwright
 │   └── betagouv/               # Scraping BetaGouv
-├── filters/            # Filtrage automatique des offres
+├── filters/            # Filtres personnalisés par utilisateur
 ├── cron/               # Jobs planifiés (scraping quotidien, rappels)
 ├── prisma/             # Client Prisma
 └── app.ts
@@ -88,6 +91,7 @@ api/src/
 
 ```prisma
 User          — compte utilisateur (email, username, passwordHash)
+UserFilters   — filtres personnalisés (stacks, mots-clés, localisation...)
 JobOffer      — offre d'emploi scrapée ou ajoutée manuellement
 Application   — candidature liée à une offre (statut, notes, followUp)
 Interview     — entretiens liés à une candidature
@@ -122,6 +126,8 @@ REFRESH_SECRET=your_refresh_secret
 JWT_EXPIRES_IN=15m
 REFRESH_EXPIRES_IN=30d
 PORT=3000
+FRANCE_TRAVAIL_CLIENT_ID=PAR_...
+FRANCE_TRAVAIL_CLIENT_SECRET=...
 ```
 
 ---
