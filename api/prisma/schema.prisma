@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  username     String
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  jobOffers    JobOffer[]
+  applications Application[]
+}
+
+model JobOffer {
+  id          String   @id @default(uuid())
+  externalId  String   @unique
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+
+  title       String
+  company     String
+  url         String
+  description String
+  location    String
+  remote      String
+  salary      String?
+  source      String
+  publishedAt DateTime
+  scrapedAt   DateTime @default(now())
+  status      String   @default("to_review")
+
+  application Application?
+}
+
+model Application {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  jobOfferId   String   @unique
+  jobOffer     JobOffer @relation(fields: [jobOfferId], references: [id])
+
+  appliedAt    DateTime @default(now())
+  followUpAt   DateTime
+  followUpSent Boolean  @default(false)
+  notes        String?
+
+  interviews   Interview[]
+}
+
+model Interview {
+  id            String      @id @default(uuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  scheduledAt   DateTime
+  type          String
+  notes         String?
+}
