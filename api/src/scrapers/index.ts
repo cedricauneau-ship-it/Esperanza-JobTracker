@@ -1,14 +1,14 @@
 import { prisma } from '../prisma/prisma.service'
 import { getUserFilters } from '../filters/filters.service'
 import { FranceTravailScraper } from './francetravail/francetravail.scraper'
+import { IndeedScraper } from './indeed/indeed.scraper'
 
 export async function runScrapers(userId: string) {
   const userFilters = await getUserFilters(userId)
 
   const scrapers = [
     new FranceTravailScraper(userFilters),
-    // new WTTJScraper(userFilters),
-    // new BetaGouvScraper(userFilters),
+    new IndeedScraper(),
   ]
 
   for (const scraper of scrapers) {
