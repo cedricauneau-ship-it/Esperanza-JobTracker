@@ -19,27 +19,6 @@ model User {
   filters      UserFilters?
 }
 
-model UserFilters {
-  id                String   @id @default(uuid())
-  userId            String   @unique
-  user              User     @relation(fields: [userId], references: [id])
-
-  excludedStacks    String[]
-  excludedKeywords  String[]
-  excludedCompanies String[]
-  requiredStacks    String[]
-  contractTypes     String[]
-  remoteOnly        Boolean  @default(false)
-
-  departement       String?
-  commune           String?
-  radius            Int?
-
-  followUpDays      Int      @default(7) // rappel de relance en jours
-
-  updatedAt         DateTime @updatedAt
-}
-
 model JobOffer {
   id          String   @id @default(uuid())
   externalId  String   @unique
@@ -56,9 +35,32 @@ model JobOffer {
   source      String
   publishedAt DateTime
   scrapedAt   DateTime @default(now())
+  lastSeenAt  DateTime @default(now()) // dernière fois que l'offre est apparue dans le scraping
   status      String   @default("to_review")
 
   application Application?
+}
+
+model UserFilters {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+
+  excludedStacks    String[]
+  excludedKeywords  String[]
+  excludedCompanies String[]
+  requiredStacks    String[]
+  contractTypes     String[]
+  remoteOnly        Boolean  @default(false)
+
+  departement       String?
+  commune           String?
+  radius            Int?
+
+  followUpDays      Int      @default(7)
+  expiredAfterDays  Int      @default(14) // nombre de jours avant de marquer une offre comme expirée
+
+  updatedAt         DateTime @updatedAt
 }
 
 model Application {

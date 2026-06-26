@@ -38,6 +38,7 @@ export type JobOfferMinAggregateOutputType = {
   source: string | null
   publishedAt: Date | null
   scrapedAt: Date | null
+  lastSeenAt: Date | null
   status: string | null
 }
 
@@ -55,6 +56,7 @@ export type JobOfferMaxAggregateOutputType = {
   source: string | null
   publishedAt: Date | null
   scrapedAt: Date | null
+  lastSeenAt: Date | null
   status: string | null
 }
 
@@ -72,6 +74,7 @@ export type JobOfferCountAggregateOutputType = {
   source: number
   publishedAt: number
   scrapedAt: number
+  lastSeenAt: number
   status: number
   _all: number
 }
@@ -91,6 +94,7 @@ export type JobOfferMinAggregateInputType = {
   source?: true
   publishedAt?: true
   scrapedAt?: true
+  lastSeenAt?: true
   status?: true
 }
 
@@ -108,6 +112,7 @@ export type JobOfferMaxAggregateInputType = {
   source?: true
   publishedAt?: true
   scrapedAt?: true
+  lastSeenAt?: true
   status?: true
 }
 
@@ -125,6 +130,7 @@ export type JobOfferCountAggregateInputType = {
   source?: true
   publishedAt?: true
   scrapedAt?: true
+  lastSeenAt?: true
   status?: true
   _all?: true
 }
@@ -215,6 +221,7 @@ export type JobOfferGroupByOutputType = {
   source: string
   publishedAt: Date
   scrapedAt: Date
+  lastSeenAt: Date
   status: string
   _count: JobOfferCountAggregateOutputType | null
   _min: JobOfferMinAggregateOutputType | null
@@ -253,6 +260,7 @@ export type JobOfferWhereInput = {
   source?: Prisma.StringFilter<"JobOffer"> | string
   publishedAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
   scrapedAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
+  lastSeenAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
   status?: Prisma.StringFilter<"JobOffer"> | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   application?: Prisma.XOR<Prisma.ApplicationNullableScalarRelationFilter, Prisma.ApplicationWhereInput> | null
@@ -272,6 +280,7 @@ export type JobOfferOrderByWithRelationInput = {
   source?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   application?: Prisma.ApplicationOrderByWithRelationInput
@@ -294,6 +303,7 @@ export type JobOfferWhereUniqueInput = Prisma.AtLeast<{
   source?: Prisma.StringFilter<"JobOffer"> | string
   publishedAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
   scrapedAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
+  lastSeenAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
   status?: Prisma.StringFilter<"JobOffer"> | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   application?: Prisma.XOR<Prisma.ApplicationNullableScalarRelationFilter, Prisma.ApplicationWhereInput> | null
@@ -313,6 +323,7 @@ export type JobOfferOrderByWithAggregationInput = {
   source?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   _count?: Prisma.JobOfferCountOrderByAggregateInput
   _max?: Prisma.JobOfferMaxOrderByAggregateInput
@@ -336,6 +347,7 @@ export type JobOfferScalarWhereWithAggregatesInput = {
   source?: Prisma.StringWithAggregatesFilter<"JobOffer"> | string
   publishedAt?: Prisma.DateTimeWithAggregatesFilter<"JobOffer"> | Date | string
   scrapedAt?: Prisma.DateTimeWithAggregatesFilter<"JobOffer"> | Date | string
+  lastSeenAt?: Prisma.DateTimeWithAggregatesFilter<"JobOffer"> | Date | string
   status?: Prisma.StringWithAggregatesFilter<"JobOffer"> | string
 }
 
@@ -352,6 +364,7 @@ export type JobOfferCreateInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
   user?: Prisma.UserCreateNestedOneWithoutJobOffersInput
   application?: Prisma.ApplicationCreateNestedOneWithoutJobOfferInput
@@ -371,6 +384,7 @@ export type JobOfferUncheckedCreateInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
   application?: Prisma.ApplicationUncheckedCreateNestedOneWithoutJobOfferInput
 }
@@ -388,6 +402,7 @@ export type JobOfferUpdateInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneWithoutJobOffersNestedInput
   application?: Prisma.ApplicationUpdateOneWithoutJobOfferNestedInput
@@ -407,6 +422,7 @@ export type JobOfferUncheckedUpdateInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   application?: Prisma.ApplicationUncheckedUpdateOneWithoutJobOfferNestedInput
 }
@@ -425,6 +441,7 @@ export type JobOfferCreateManyInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
 }
 
@@ -441,6 +458,7 @@ export type JobOfferUpdateManyMutationInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -458,6 +476,7 @@ export type JobOfferUncheckedUpdateManyInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -485,6 +504,7 @@ export type JobOfferCountOrderByAggregateInput = {
   source?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
@@ -502,6 +522,7 @@ export type JobOfferMaxOrderByAggregateInput = {
   source?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
@@ -519,6 +540,7 @@ export type JobOfferMinOrderByAggregateInput = {
   source?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
 }
 
@@ -569,6 +591,10 @@ export type JobOfferUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.JobOfferScalarWhereInput | Prisma.JobOfferScalarWhereInput[]
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type JobOfferCreateNestedOneWithoutApplicationInput = {
   create?: Prisma.XOR<Prisma.JobOfferCreateWithoutApplicationInput, Prisma.JobOfferUncheckedCreateWithoutApplicationInput>
   connectOrCreate?: Prisma.JobOfferCreateOrConnectWithoutApplicationInput
@@ -596,6 +622,7 @@ export type JobOfferCreateWithoutUserInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
   application?: Prisma.ApplicationCreateNestedOneWithoutJobOfferInput
 }
@@ -613,6 +640,7 @@ export type JobOfferUncheckedCreateWithoutUserInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
   application?: Prisma.ApplicationUncheckedCreateNestedOneWithoutJobOfferInput
 }
@@ -660,6 +688,7 @@ export type JobOfferScalarWhereInput = {
   source?: Prisma.StringFilter<"JobOffer"> | string
   publishedAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
   scrapedAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
+  lastSeenAt?: Prisma.DateTimeFilter<"JobOffer"> | Date | string
   status?: Prisma.StringFilter<"JobOffer"> | string
 }
 
@@ -676,6 +705,7 @@ export type JobOfferCreateWithoutApplicationInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
   user?: Prisma.UserCreateNestedOneWithoutJobOffersInput
 }
@@ -694,6 +724,7 @@ export type JobOfferUncheckedCreateWithoutApplicationInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
 }
 
@@ -726,6 +757,7 @@ export type JobOfferUpdateWithoutApplicationInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneWithoutJobOffersNestedInput
 }
@@ -744,6 +776,7 @@ export type JobOfferUncheckedUpdateWithoutApplicationInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -760,6 +793,7 @@ export type JobOfferCreateManyUserInput = {
   source: string
   publishedAt: Date | string
   scrapedAt?: Date | string
+  lastSeenAt?: Date | string
   status?: string
 }
 
@@ -776,6 +810,7 @@ export type JobOfferUpdateWithoutUserInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   application?: Prisma.ApplicationUpdateOneWithoutJobOfferNestedInput
 }
@@ -793,6 +828,7 @@ export type JobOfferUncheckedUpdateWithoutUserInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   application?: Prisma.ApplicationUncheckedUpdateOneWithoutJobOfferNestedInput
 }
@@ -810,6 +846,7 @@ export type JobOfferUncheckedUpdateManyWithoutUserInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lastSeenAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -829,6 +866,7 @@ export type JobOfferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   source?: boolean
   publishedAt?: boolean
   scrapedAt?: boolean
+  lastSeenAt?: boolean
   status?: boolean
   user?: boolean | Prisma.JobOffer$userArgs<ExtArgs>
   application?: boolean | Prisma.JobOffer$applicationArgs<ExtArgs>
@@ -848,6 +886,7 @@ export type JobOfferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   source?: boolean
   publishedAt?: boolean
   scrapedAt?: boolean
+  lastSeenAt?: boolean
   status?: boolean
   user?: boolean | Prisma.JobOffer$userArgs<ExtArgs>
 }, ExtArgs["result"]["jobOffer"]>
@@ -866,6 +905,7 @@ export type JobOfferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   source?: boolean
   publishedAt?: boolean
   scrapedAt?: boolean
+  lastSeenAt?: boolean
   status?: boolean
   user?: boolean | Prisma.JobOffer$userArgs<ExtArgs>
 }, ExtArgs["result"]["jobOffer"]>
@@ -884,10 +924,11 @@ export type JobOfferSelectScalar = {
   source?: boolean
   publishedAt?: boolean
   scrapedAt?: boolean
+  lastSeenAt?: boolean
   status?: boolean
 }
 
-export type JobOfferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalId" | "userId" | "title" | "company" | "url" | "description" | "location" | "remote" | "salary" | "source" | "publishedAt" | "scrapedAt" | "status", ExtArgs["result"]["jobOffer"]>
+export type JobOfferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalId" | "userId" | "title" | "company" | "url" | "description" | "location" | "remote" | "salary" | "source" | "publishedAt" | "scrapedAt" | "lastSeenAt" | "status", ExtArgs["result"]["jobOffer"]>
 export type JobOfferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.JobOffer$userArgs<ExtArgs>
   application?: boolean | Prisma.JobOffer$applicationArgs<ExtArgs>
@@ -919,6 +960,7 @@ export type $JobOfferPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     source: string
     publishedAt: Date
     scrapedAt: Date
+    lastSeenAt: Date
     status: string
   }, ExtArgs["result"]["jobOffer"]>
   composites: {}
@@ -1358,6 +1400,7 @@ export interface JobOfferFieldRefs {
   readonly source: Prisma.FieldRef<"JobOffer", 'String'>
   readonly publishedAt: Prisma.FieldRef<"JobOffer", 'DateTime'>
   readonly scrapedAt: Prisma.FieldRef<"JobOffer", 'DateTime'>
+  readonly lastSeenAt: Prisma.FieldRef<"JobOffer", 'DateTime'>
   readonly status: Prisma.FieldRef<"JobOffer", 'String'>
 }
     

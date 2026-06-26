@@ -326,14 +326,14 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
-export type UserScalarRelationFilter = {
-  is?: Prisma.UserWhereInput
-  isNot?: Prisma.UserWhereInput
-}
-
 export type UserNullableScalarRelationFilter = {
   is?: Prisma.UserWhereInput | null
   isNot?: Prisma.UserWhereInput | null
+}
+
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -342,20 +342,6 @@ export type StringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type UserCreateNestedOneWithoutFiltersInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFiltersInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutFiltersNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFiltersInput
-  upsert?: Prisma.UserUpsertWithoutFiltersInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFiltersInput, Prisma.UserUpdateWithoutFiltersInput>, Prisma.UserUncheckedUpdateWithoutFiltersInput>
 }
 
 export type UserCreateNestedOneWithoutJobOffersInput = {
@@ -374,6 +360,20 @@ export type UserUpdateOneWithoutJobOffersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJobOffersInput, Prisma.UserUpdateWithoutJobOffersInput>, Prisma.UserUncheckedUpdateWithoutJobOffersInput>
 }
 
+export type UserCreateNestedOneWithoutFiltersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFiltersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFiltersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFiltersInput
+  upsert?: Prisma.UserUpsertWithoutFiltersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFiltersInput, Prisma.UserUpdateWithoutFiltersInput>, Prisma.UserUncheckedUpdateWithoutFiltersInput>
+}
+
 export type UserCreateNestedOneWithoutApplicationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutApplicationsInput
@@ -386,62 +386,6 @@ export type UserUpdateOneRequiredWithoutApplicationsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutApplicationsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApplicationsInput, Prisma.UserUpdateWithoutApplicationsInput>, Prisma.UserUncheckedUpdateWithoutApplicationsInput>
-}
-
-export type UserCreateWithoutFiltersInput = {
-  id?: string
-  email: string
-  username: string
-  passwordHash: string
-  createdAt?: Date | string
-  jobOffers?: Prisma.JobOfferCreateNestedManyWithoutUserInput
-  applications?: Prisma.ApplicationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutFiltersInput = {
-  id?: string
-  email: string
-  username: string
-  passwordHash: string
-  createdAt?: Date | string
-  jobOffers?: Prisma.JobOfferUncheckedCreateNestedManyWithoutUserInput
-  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutFiltersInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
-}
-
-export type UserUpsertWithoutFiltersInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFiltersInput, Prisma.UserUncheckedUpdateWithoutFiltersInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutFiltersInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFiltersInput, Prisma.UserUncheckedUpdateWithoutFiltersInput>
-}
-
-export type UserUpdateWithoutFiltersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  jobOffers?: Prisma.JobOfferUpdateManyWithoutUserNestedInput
-  applications?: Prisma.ApplicationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutFiltersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  jobOffers?: Prisma.JobOfferUncheckedUpdateManyWithoutUserNestedInput
-  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutJobOffersInput = {
@@ -498,6 +442,62 @@ export type UserUncheckedUpdateWithoutJobOffersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
   filters?: Prisma.UserFiltersUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFiltersInput = {
+  id?: string
+  email: string
+  username: string
+  passwordHash: string
+  createdAt?: Date | string
+  jobOffers?: Prisma.JobOfferCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFiltersInput = {
+  id?: string
+  email: string
+  username: string
+  passwordHash: string
+  createdAt?: Date | string
+  jobOffers?: Prisma.JobOfferUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFiltersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
+}
+
+export type UserUpsertWithoutFiltersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFiltersInput, Prisma.UserUncheckedUpdateWithoutFiltersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFiltersInput, Prisma.UserUncheckedCreateWithoutFiltersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFiltersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFiltersInput, Prisma.UserUncheckedUpdateWithoutFiltersInput>
+}
+
+export type UserUpdateWithoutFiltersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobOffers?: Prisma.JobOfferUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFiltersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobOffers?: Prisma.JobOfferUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {

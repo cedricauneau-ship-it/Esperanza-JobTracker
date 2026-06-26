@@ -3,7 +3,7 @@ import { getUserFilters } from '../filters/filters.service'
 import { FranceTravailScraper } from './francetravail/francetravail.scraper'
 import { IndeedScraper } from './indeed/indeed.scraper'
 
-export async function runScrapers(userId: string) {
+async function runScrapers(userId: string) {
   const userFilters = await getUserFilters(userId)
 
   const scrapers = [
@@ -17,11 +17,15 @@ export async function runScrapers(userId: string) {
       const rawJobs = await scraper.fetch()
       console.log(`[${scraper.source}] ${rawJobs.length} offres récupérées`)
 
+      const now = new Date()
+
       for (const job of rawJobs) {
         await prisma.jobOffer.upsert({
           where: { externalId: job.externalId },
-          update: {},
-          create: { ...job },
+          // Si l'offre existe déjà, on met à jour lastSeenAt pour indiquer qu'elle est toujours active
+          update: { lastSeenAt: now },
+          // Si l'offre est nouvelle, on la crée avec lastSeenAt = maintenant
+          create: { ...job, lastSeenAt: now },
         })
       }
 
@@ -31,3 +35,5 @@ export async function runScrapers(userId: string) {
     }
   }
 }
+
+export { runScrapers }

@@ -52,8 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  UserFilters: 'UserFilters',
   JobOffer: 'JobOffer',
+  UserFilters: 'UserFilters',
   Application: 'Application',
   Interview: 'Interview'
 } as const
@@ -85,25 +85,6 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const UserFiltersScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  excludedStacks: 'excludedStacks',
-  excludedKeywords: 'excludedKeywords',
-  excludedCompanies: 'excludedCompanies',
-  requiredStacks: 'requiredStacks',
-  contractTypes: 'contractTypes',
-  remoteOnly: 'remoteOnly',
-  departement: 'departement',
-  commune: 'commune',
-  radius: 'radius',
-  followUpDays: 'followUpDays',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserFiltersScalarFieldEnum = (typeof UserFiltersScalarFieldEnum)[keyof typeof UserFiltersScalarFieldEnum]
-
-
 export const JobOfferScalarFieldEnum = {
   id: 'id',
   externalId: 'externalId',
@@ -118,10 +99,31 @@ export const JobOfferScalarFieldEnum = {
   source: 'source',
   publishedAt: 'publishedAt',
   scrapedAt: 'scrapedAt',
+  lastSeenAt: 'lastSeenAt',
   status: 'status'
 } as const
 
 export type JobOfferScalarFieldEnum = (typeof JobOfferScalarFieldEnum)[keyof typeof JobOfferScalarFieldEnum]
+
+
+export const UserFiltersScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  excludedStacks: 'excludedStacks',
+  excludedKeywords: 'excludedKeywords',
+  excludedCompanies: 'excludedCompanies',
+  requiredStacks: 'requiredStacks',
+  contractTypes: 'contractTypes',
+  remoteOnly: 'remoteOnly',
+  departement: 'departement',
+  commune: 'commune',
+  radius: 'radius',
+  followUpDays: 'followUpDays',
+  expiredAfterDays: 'expiredAfterDays',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserFiltersScalarFieldEnum = (typeof UserFiltersScalarFieldEnum)[keyof typeof UserFiltersScalarFieldEnum]
 
 
 export const ApplicationScalarFieldEnum = {
