@@ -5,6 +5,7 @@ export interface UserFiltersConfig extends JobFilters {
   departement?: string
   commune?: string
   radius?: number
+  followUpDays?: number
 }
 
 export const getUserFilters = async (userId: string): Promise<UserFiltersConfig | null> => {
@@ -21,6 +22,7 @@ export const getUserFilters = async (userId: string): Promise<UserFiltersConfig 
     departement: filters.departement ?? undefined,
     commune: filters.commune ?? undefined,
     radius: filters.radius ?? undefined,
+    followUpDays: filters.followUpDays,
   }
 }
 
@@ -39,6 +41,7 @@ export const upsertUserFilters = async (userId: string, filters: Partial<UserFil
       departement: filters.departement,
       commune: filters.commune,
       radius: filters.radius,
+      followUpDays: filters.followUpDays || 7,
     },
   })
 }

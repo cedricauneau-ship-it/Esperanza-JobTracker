@@ -28,10 +28,12 @@ export type AggregateUserFilters = {
 
 export type UserFiltersAvgAggregateOutputType = {
   radius: number | null
+  followUpDays: number | null
 }
 
 export type UserFiltersSumAggregateOutputType = {
   radius: number | null
+  followUpDays: number | null
 }
 
 export type UserFiltersMinAggregateOutputType = {
@@ -41,6 +43,7 @@ export type UserFiltersMinAggregateOutputType = {
   departement: string | null
   commune: string | null
   radius: number | null
+  followUpDays: number | null
   updatedAt: Date | null
 }
 
@@ -51,6 +54,7 @@ export type UserFiltersMaxAggregateOutputType = {
   departement: string | null
   commune: string | null
   radius: number | null
+  followUpDays: number | null
   updatedAt: Date | null
 }
 
@@ -66,6 +70,7 @@ export type UserFiltersCountAggregateOutputType = {
   departement: number
   commune: number
   radius: number
+  followUpDays: number
   updatedAt: number
   _all: number
 }
@@ -73,10 +78,12 @@ export type UserFiltersCountAggregateOutputType = {
 
 export type UserFiltersAvgAggregateInputType = {
   radius?: true
+  followUpDays?: true
 }
 
 export type UserFiltersSumAggregateInputType = {
   radius?: true
+  followUpDays?: true
 }
 
 export type UserFiltersMinAggregateInputType = {
@@ -86,6 +93,7 @@ export type UserFiltersMinAggregateInputType = {
   departement?: true
   commune?: true
   radius?: true
+  followUpDays?: true
   updatedAt?: true
 }
 
@@ -96,6 +104,7 @@ export type UserFiltersMaxAggregateInputType = {
   departement?: true
   commune?: true
   radius?: true
+  followUpDays?: true
   updatedAt?: true
 }
 
@@ -111,6 +120,7 @@ export type UserFiltersCountAggregateInputType = {
   departement?: true
   commune?: true
   radius?: true
+  followUpDays?: true
   updatedAt?: true
   _all?: true
 }
@@ -213,6 +223,7 @@ export type UserFiltersGroupByOutputType = {
   departement: string | null
   commune: string | null
   radius: number | null
+  followUpDays: number
   updatedAt: Date
   _count: UserFiltersCountAggregateOutputType | null
   _avg: UserFiltersAvgAggregateOutputType | null
@@ -251,6 +262,7 @@ export type UserFiltersWhereInput = {
   departement?: Prisma.StringNullableFilter<"UserFilters"> | string | null
   commune?: Prisma.StringNullableFilter<"UserFilters"> | string | null
   radius?: Prisma.IntNullableFilter<"UserFilters"> | number | null
+  followUpDays?: Prisma.IntFilter<"UserFilters"> | number
   updatedAt?: Prisma.DateTimeFilter<"UserFilters"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -267,6 +279,7 @@ export type UserFiltersOrderByWithRelationInput = {
   departement?: Prisma.SortOrderInput | Prisma.SortOrder
   commune?: Prisma.SortOrderInput | Prisma.SortOrder
   radius?: Prisma.SortOrderInput | Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -286,6 +299,7 @@ export type UserFiltersWhereUniqueInput = Prisma.AtLeast<{
   departement?: Prisma.StringNullableFilter<"UserFilters"> | string | null
   commune?: Prisma.StringNullableFilter<"UserFilters"> | string | null
   radius?: Prisma.IntNullableFilter<"UserFilters"> | number | null
+  followUpDays?: Prisma.IntFilter<"UserFilters"> | number
   updatedAt?: Prisma.DateTimeFilter<"UserFilters"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
@@ -302,6 +316,7 @@ export type UserFiltersOrderByWithAggregationInput = {
   departement?: Prisma.SortOrderInput | Prisma.SortOrder
   commune?: Prisma.SortOrderInput | Prisma.SortOrder
   radius?: Prisma.SortOrderInput | Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserFiltersCountOrderByAggregateInput
   _avg?: Prisma.UserFiltersAvgOrderByAggregateInput
@@ -325,6 +340,7 @@ export type UserFiltersScalarWhereWithAggregatesInput = {
   departement?: Prisma.StringNullableWithAggregatesFilter<"UserFilters"> | string | null
   commune?: Prisma.StringNullableWithAggregatesFilter<"UserFilters"> | string | null
   radius?: Prisma.IntNullableWithAggregatesFilter<"UserFilters"> | number | null
+  followUpDays?: Prisma.IntWithAggregatesFilter<"UserFilters"> | number
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserFilters"> | Date | string
 }
 
@@ -339,6 +355,7 @@ export type UserFiltersCreateInput = {
   departement?: string | null
   commune?: string | null
   radius?: number | null
+  followUpDays?: number
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutFiltersInput
 }
@@ -355,6 +372,7 @@ export type UserFiltersUncheckedCreateInput = {
   departement?: string | null
   commune?: string | null
   radius?: number | null
+  followUpDays?: number
   updatedAt?: Date | string
 }
 
@@ -369,6 +387,7 @@ export type UserFiltersUpdateInput = {
   departement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commune?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   radius?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  followUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutFiltersNestedInput
 }
@@ -385,6 +404,7 @@ export type UserFiltersUncheckedUpdateInput = {
   departement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commune?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   radius?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  followUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -400,6 +420,7 @@ export type UserFiltersCreateManyInput = {
   departement?: string | null
   commune?: string | null
   radius?: number | null
+  followUpDays?: number
   updatedAt?: Date | string
 }
 
@@ -414,6 +435,7 @@ export type UserFiltersUpdateManyMutationInput = {
   departement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commune?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   radius?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  followUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -429,6 +451,7 @@ export type UserFiltersUncheckedUpdateManyInput = {
   departement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commune?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   radius?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  followUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -457,11 +480,13 @@ export type UserFiltersCountOrderByAggregateInput = {
   departement?: Prisma.SortOrder
   commune?: Prisma.SortOrder
   radius?: Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserFiltersAvgOrderByAggregateInput = {
   radius?: Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
 }
 
 export type UserFiltersMaxOrderByAggregateInput = {
@@ -471,6 +496,7 @@ export type UserFiltersMaxOrderByAggregateInput = {
   departement?: Prisma.SortOrder
   commune?: Prisma.SortOrder
   radius?: Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -481,11 +507,13 @@ export type UserFiltersMinOrderByAggregateInput = {
   departement?: Prisma.SortOrder
   commune?: Prisma.SortOrder
   radius?: Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserFiltersSumOrderByAggregateInput = {
   radius?: Prisma.SortOrder
+  followUpDays?: Prisma.SortOrder
 }
 
 export type UserFiltersCreateNestedOneWithoutUserInput = {
@@ -581,6 +609,14 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type UserFiltersCreateWithoutUserInput = {
   id?: string
   excludedStacks?: Prisma.UserFiltersCreateexcludedStacksInput | string[]
@@ -592,6 +628,7 @@ export type UserFiltersCreateWithoutUserInput = {
   departement?: string | null
   commune?: string | null
   radius?: number | null
+  followUpDays?: number
   updatedAt?: Date | string
 }
 
@@ -606,6 +643,7 @@ export type UserFiltersUncheckedCreateWithoutUserInput = {
   departement?: string | null
   commune?: string | null
   radius?: number | null
+  followUpDays?: number
   updatedAt?: Date | string
 }
 
@@ -636,6 +674,7 @@ export type UserFiltersUpdateWithoutUserInput = {
   departement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commune?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   radius?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  followUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -650,6 +689,7 @@ export type UserFiltersUncheckedUpdateWithoutUserInput = {
   departement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   commune?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   radius?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  followUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -667,6 +707,7 @@ export type UserFiltersSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   departement?: boolean
   commune?: boolean
   radius?: boolean
+  followUpDays?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userFilters"]>
@@ -683,6 +724,7 @@ export type UserFiltersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   departement?: boolean
   commune?: boolean
   radius?: boolean
+  followUpDays?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userFilters"]>
@@ -699,6 +741,7 @@ export type UserFiltersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   departement?: boolean
   commune?: boolean
   radius?: boolean
+  followUpDays?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userFilters"]>
@@ -715,10 +758,11 @@ export type UserFiltersSelectScalar = {
   departement?: boolean
   commune?: boolean
   radius?: boolean
+  followUpDays?: boolean
   updatedAt?: boolean
 }
 
-export type UserFiltersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "excludedStacks" | "excludedKeywords" | "excludedCompanies" | "requiredStacks" | "contractTypes" | "remoteOnly" | "departement" | "commune" | "radius" | "updatedAt", ExtArgs["result"]["userFilters"]>
+export type UserFiltersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "excludedStacks" | "excludedKeywords" | "excludedCompanies" | "requiredStacks" | "contractTypes" | "remoteOnly" | "departement" | "commune" | "radius" | "followUpDays" | "updatedAt", ExtArgs["result"]["userFilters"]>
 export type UserFiltersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -746,6 +790,7 @@ export type $UserFiltersPayload<ExtArgs extends runtime.Types.Extensions.Interna
     departement: string | null
     commune: string | null
     radius: number | null
+    followUpDays: number
     updatedAt: Date
   }, ExtArgs["result"]["userFilters"]>
   composites: {}
@@ -1182,6 +1227,7 @@ export interface UserFiltersFieldRefs {
   readonly departement: Prisma.FieldRef<"UserFilters", 'String'>
   readonly commune: Prisma.FieldRef<"UserFilters", 'String'>
   readonly radius: Prisma.FieldRef<"UserFilters", 'Int'>
+  readonly followUpDays: Prisma.FieldRef<"UserFilters", 'Int'>
   readonly updatedAt: Prisma.FieldRef<"UserFilters", 'DateTime'>
 }
     

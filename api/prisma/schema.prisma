@@ -31,10 +31,11 @@ model UserFilters {
   contractTypes     String[]
   remoteOnly        Boolean  @default(false)
 
-  // Localisation
-  departement       String?  // ex: "75", "92", "93"
-  commune           String?  // ex: "75056" (code INSEE)
-  radius            Int?     // en km, ex: 20
+  departement       String?
+  commune           String?
+  radius            Int?
+
+  followUpDays      Int      @default(7) // rappel de relance en jours
 
   updatedAt         DateTime @updatedAt
 }

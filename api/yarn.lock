@@ -336,6 +336,11 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-2.1.0.tgz#052aa67a48eccc4309d7f0191b7e41434b90bb78"
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
+"@types/node-cron@^3.0.11":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@types/node-cron/-/node-cron-3.0.11.tgz#70b7131f65038ae63cfe841354c8aba363632344"
+  integrity sha512-0ikrnug3/IyneSHqCBeslAhlK2aBfYek1fGo4bP4QnZPmiqSGRK+Oy7ZMisLWkesffJvQ1cqAcBnJC+8+nxIAg==
+
 "@types/node@*", "@types/node@^26.0.1":
   version "26.0.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-26.0.1.tgz#4a60e2c7a6d68bd261e265f8983bfe1601263ce3"
@@ -1155,6 +1160,11 @@ node-addon-api@^8.3.0:
   version "8.8.0"
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-8.8.0.tgz#b742be05007b37ebc1741bbaf370d22bf25d208a"
   integrity sha512-c5Ko1fZJIJmzhFIkhRN76WTq+fC6tWnGy9CXA0fA+XygsWZmEwG8vmbkNqxMyoaa0Tin4djul49NzdVcJJcjeA==
+
+node-cron@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/node-cron/-/node-cron-4.5.0.tgz#284908d302415a32e0774b3a8c8184d423e262a8"
+  integrity sha512-4Trh+kjvbXokyJkwQumvD5YAgeJfgHLR/sKyu71uSmxfCR5QMO1hldpvmFZOICN5pLgNY+J5Y8+ar3XKo5/4tQ==
 
 node-gyp-build@^4.8.4:
   version "4.8.4"

@@ -97,6 +97,7 @@ export const UserFiltersScalarFieldEnum = {
   departement: 'departement',
   commune: 'commune',
   radius: 'radius',
+  followUpDays: 'followUpDays',
   updatedAt: 'updatedAt'
 } as const
 
