@@ -1,6 +1,6 @@
 # Esperanza — Job Tracker
 
-> 🚧 **Projet en cours de développement** — backend ~70% terminé, web et mobile à venir.
+> 🚧 **Projet en cours de développement** — backend terminé, dashboard web et app mobile à venir.
 
 Application fullstack de suivi de recherche d'emploi — scraping automatique des offres, gestion des candidatures et rappels de relance.
 
@@ -10,25 +10,27 @@ Construite en autonomie avec Node.js / TypeScript / React Native / Next.js.
 
 ## Stack technique
 
-| Couche | Technologie |
-|---|---|
-| Backend | Node.js · Express · TypeScript |
-| ORM | Prisma 7 |
-| Base de données | PostgreSQL (Supabase) |
-| Auth | JWT · Refresh token |
-| Scraping | Playwright · API France Travail · BetaGouv |
-| Web | Next.js · TypeScript |
-| Mobile | React Native · Expo |
-| Déploiement | Vercel (web) · Railway (API) |
+| Couche          | Technologie                              |
+| --------------- | ---------------------------------------- |
+| Backend         | Node.js · Express · TypeScript           |
+| ORM             | Prisma 7                                 |
+| Base de données | PostgreSQL (Supabase)                    |
+| Auth            | JWT · Refresh token                      |
+| Scraping        | Playwright · API France Travail · Indeed |
+| Web             | Next.js · TypeScript                     |
+| Mobile          | React Native · Expo                      |
+| Déploiement     | Vercel (web) · Railway (API)             |
 
 ---
 
 ## Fonctionnalités
 
-- **Scraping automatique** — France Travail (API officielle), WTTJ (Playwright), BetaGouv
+- **Scraping automatique** — France Travail (API officielle) · Indeed (Playwright) — 2 fois par jour (8h et 18h)
 - **Filtres personnalisés par utilisateur** — stacks exclues, mots-clés, entreprises, zone géographique, télétravail
+- **Gestion des offres expirées** — marquage automatique et suppression après 60 jours sans candidature
 - **Suivi des candidatures** — statuts (à lire, postulée, entretien, refus, offre)
-- **Rappels de relance** — alerte automatique à J+7 si pas de réponse
+- **Suivi des entretiens** — types (phone, technical, fit, final), date, notes
+- **Rappels de relance** — alerte automatique configurable (défaut J+7)
 - **Pagination** — 30 offres par page
 - **Multi-utilisateurs** — comptes isolés, données strictement séparées
 - **Dashboard web** — vue d'ensemble sur PC
@@ -38,19 +40,20 @@ Construite en autonomie avec Node.js / TypeScript / React Native / Next.js.
 
 ## Avancement
 
-| Module | Statut |
-|---|---|
-| Auth (signup, signin, refresh token) | ✅ Terminé |
-| Modèle de données (Prisma) | ✅ Terminé |
-| CRUD offres d'emploi | ✅ Terminé |
-| Filtres utilisateur (CRUD + localisation) | ✅ Terminé |
-| Pagination des offres | ✅ Terminé |
-| Scraper France Travail | ✅ Terminé |
-| Scraper WTTJ | 🔄 En cours |
-| Scraper BetaGouv | 🔄 En cours |
-| Cron job (scraping + rappels) | ⏳ À venir |
-| Dashboard web (Next.js) | ⏳ À venir |
-| App mobile (React Native) | ⏳ À venir |
+| Module                                     | Statut     |
+| ------------------------------------------ | ---------- |
+| Auth (signup, signin, refresh token)       | ✅ Terminé |
+| Modèle de données (Prisma)                 | ✅ Terminé |
+| CRUD offres d'emploi                       | ✅ Terminé |
+| Filtres utilisateur (CRUD + localisation)  | ✅ Terminé |
+| Pagination des offres                      | ✅ Terminé |
+| Scraper France Travail                     | ✅ Terminé |
+| Scraper Indeed                             | ✅ Terminé |
+| Gestion des candidatures                   | ✅ Terminé |
+| Suivi des entretiens                       | ✅ Terminé |
+| Cron jobs (scraping · rappels · nettoyage) | ✅ Terminé |
+| Dashboard web (Next.js)                    | ⏳ À venir |
+| App mobile (React Native)                  | ⏳ À venir |
 
 ---
 
@@ -77,13 +80,37 @@ api/src/
 ├── scrapers/
 │   ├── base.scraper.ts         # Interface commune (pattern adapter)
 │   ├── francetravail/          # API officielle France Travail
-│   ├── wttj/                   # Scraping WTTJ via Playwright
-│   └── betagouv/               # Scraping BetaGouv
+│   └── indeed/                 # Scraping Indeed via Playwright
 ├── filters/            # Filtres personnalisés par utilisateur
-├── cron/               # Jobs planifiés (scraping quotidien, rappels)
+├── cron/               # Jobs planifiés (scraping · rappels · nettoyage)
 ├── prisma/             # Client Prisma
 └── app.ts
 ```
+
+---
+
+## Routes API
+
+| Méthode | Route                        | Description                       |
+| ------- | ---------------------------- | --------------------------------- |
+| POST    | `/users/signup`              | Inscription                       |
+| POST    | `/users/signin`              | Connexion                         |
+| POST    | `/users/refresh`             | Renouvellement du token           |
+| GET     | `/users/me`                  | Profil utilisateur                |
+| GET     | `/jobs?page=1`               | Liste des offres paginées         |
+| PATCH   | `/jobs/:id/status`           | Mise à jour du statut d'une offre |
+| POST    | `/jobs/scrape`               | Lancer le scraping manuellement   |
+| GET     | `/filters`                   | Récupérer les filtres utilisateur |
+| PUT     | `/filters`                   | Mettre à jour les filtres         |
+| DELETE  | `/filters`                   | Supprimer les filtres             |
+| POST    | `/applications`              | Créer une candidature             |
+| GET     | `/applications`              | Liste des candidatures            |
+| PATCH   | `/applications/:id`          | Mettre à jour une candidature     |
+| DELETE  | `/applications/:id`          | Supprimer une candidature         |
+| POST    | `/interviews`                | Créer un entretien                |
+| GET     | `/interviews/:applicationId` | Liste des entretiens              |
+| PATCH   | `/interviews/:id`            | Mettre à jour un entretien        |
+| DELETE  | `/interviews/:id`            | Supprimer un entretien            |
 
 ---
 
@@ -91,17 +118,29 @@ api/src/
 
 ```prisma
 User          — compte utilisateur (email, username, passwordHash)
-UserFilters   — filtres personnalisés (stacks, mots-clés, localisation...)
-JobOffer      — offre d'emploi scrapée ou ajoutée manuellement
-Application   — candidature liée à une offre (statut, notes, followUp)
-Interview     — entretiens liés à une candidature
+UserFilters   — filtres personnalisés (stacks, mots-clés, localisation, délai de relance...)
+JobOffer      — offre d'emploi scrapée (lastSeenAt pour gestion expiration)
+Application   — candidature liée à une offre (statut, notes, followUpAt)
+Interview     — entretiens liés à une candidature (type, date, notes)
 ```
+
+---
+
+## Cron jobs
+
+| Heure | Action                          |
+| ----- | ------------------------------- |
+| 8h    | Scraping automatique des offres |
+| 9h    | Envoi des rappels de relance    |
+| 18h   | Scraping automatique des offres |
+| 2h    | Nettoyage des offres expirées   |
 
 ---
 
 ## Lancer en local
 
 ### Prérequis
+
 - Node.js 18+
 - PostgreSQL (ou compte Supabase)
 - Yarn
