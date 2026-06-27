@@ -9,7 +9,8 @@ router.get('/', authMiddleware, async (req: AuthRequest, res: Response): Promise
   try {
     const page = parseInt(req.query.page as string) || 1
     const source = req.query.source as string | undefined
-    const result = await jobsService.getJobs(req.user!.userId, page, source)
+    const days = req.query.days ? parseInt(req.query.days as string) : undefined
+    const result = await jobsService.getJobs(req.user!.userId, page, source, days)
     const { jobs, pagination } = result
     res.json({ result: true, jobs, pagination })
   } catch (error: any) {

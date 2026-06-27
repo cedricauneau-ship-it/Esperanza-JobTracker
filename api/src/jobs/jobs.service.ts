@@ -3,17 +3,21 @@ import { getUserFilters } from '../filters/filters.service'
 import { filterJobs } from '../filters/job.filter'
 import { RawJob } from '../scrapers/base.scraper'
 
-export const getJobs = async (userId: string, page: number = 1, source?: string) => {
+export const getJobs = async (userId: string, page: number = 1, source?: string, days?: number) => {
   const limit = 30
   const offset = (page - 1) * limit
+
+  const dateFilter = days
+    ? new Date(Date.now() - days * 24 * 60 * 60 * 1000)
+    : undefined
 
   const allJobs = await prisma.jobOffer.findMany({
     where: {
       status: { not: 'ignored' },
-      // Filtre par source si spécifié
       ...(source && source !== 'all' ? { source } : {}),
+      ...(dateFilter ? { publishedAt: { gte: dateFilter } } : {}),
     },
-    orderBy: { scrapedAt: 'desc' },
+    orderBy: { publishedAt: 'desc' },
   })
 
   const filters = await getUserFilters(userId)
