@@ -89,8 +89,10 @@ model Interview {
 }
 
 model ScraperConfig {
-  id            String    @id @default(uuid())
-  source        String    @unique // "indeed", "francetravail"
-  currentPage   Int       @default(1)
-  lastScrapedAt DateTime?
+  id                  String    @id @default(uuid())
+  source              String    @unique
+  currentPage         Int       @default(0)
+  consecutiveFailures Int       @default(0) // nombre d'échecs consécutifs
+  pausedUntil         DateTime? // pause si trop d'échecs
+  lastScrapedAt       DateTime?
 }

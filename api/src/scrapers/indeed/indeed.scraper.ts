@@ -4,49 +4,77 @@ import { prisma } from '../../prisma/prisma.service'
 
 const BASE_URL = 'https://fr.indeed.com'
 
+const CITIES = [
+  'Paris', 'Lyon', 'Marseille', 'Toulouse', 'Bordeaux',
+  'Nantes', 'Strasbourg', 'Lille', 'Rennes', 'Nice',
+  'Montpellier', 'Grenoble', 'Rouen', 'Toulon', 'Saint-Étienne'
+]
+
+const MAX_CONSECUTIVE_FAILURES = 3
+const PAUSE_DURATION_HOURS = 24
+
 export class IndeedScraper extends BaseScraper {
   source = 'indeed'
 
-  // Récupère la page courante depuis la base et l'incrémente
-  private async getAndIncrementPage(): Promise<number> {
+  private async getNextCity(): Promise<string | null> {
+    const now = new Date()
+
     const config = await prisma.scraperConfig.upsert({
       where: { source: 'indeed' },
-      // Si la config existe, on incrémente la page
-      update: {
-        currentPage: { increment: 1 },
-        lastScrapedAt: new Date(),
-      },
-      // Si la config n'existe pas, on la crée à la page 1
-      create: {
-        source: 'indeed',
-        currentPage: 1,
-        lastScrapedAt: new Date(),
-      },
+      update: { currentPage: { increment: 1 } },
+      create: { source: 'indeed', currentPage: 0 },
     })
-    return config.currentPage
+
+    // Vérifie si le scraper est en pause
+    if (config.pausedUntil && config.pausedUntil > now) {
+      const remaining = Math.ceil((config.pausedUntil.getTime() - now.getTime()) / 1000 / 60)
+      console.log(`[Indeed] En pause pendant encore ${remaining} minutes`)
+      return null
+    }
+
+    const cityIndex = config.currentPage % CITIES.length
+    return CITIES[cityIndex]
   }
 
-  // Remet la pagination à 1 si la page est vide (captcha ou fin des résultats)
-  private async resetPage(): Promise<void> {
+  private async recordSuccess(): Promise<void> {
+    // Remet les échecs à 0 et retire la pause si elle existait
     await prisma.scraperConfig.update({
       where: { source: 'indeed' },
-      data: { currentPage: 1 },
+      data: {
+        consecutiveFailures: 0,
+        pausedUntil: null,
+        lastScrapedAt: new Date(),
+      },
     })
-    console.log('[Indeed] Pagination remise à 1')
   }
 
-  private buildUrl(page: number): string {
-  const params = new URLSearchParams({
-    l: 'France',
-    start: ((page - 1) * 15).toString(),
-  })
-  return `${BASE_URL}/emplois?${params.toString()}`
-}
+  private async recordFailure(): Promise<void> {
+    const config = await prisma.scraperConfig.findUnique({
+      where: { source: 'indeed' },
+    })
+
+    const failures = (config?.consecutiveFailures || 0) + 1
+    console.log(`[Indeed] Échec ${failures}/${MAX_CONSECUTIVE_FAILURES}`)
+
+    const pausedUntil = failures >= MAX_CONSECUTIVE_FAILURES
+      ? new Date(Date.now() + PAUSE_DURATION_HOURS * 60 * 60 * 1000)
+      : null
+
+    if (pausedUntil) {
+      console.log(`[Indeed] ${MAX_CONSECUTIVE_FAILURES} échecs consécutifs — pause de ${PAUSE_DURATION_HOURS}h`)
+    }
+
+    await prisma.scraperConfig.update({
+      where: { source: 'indeed' },
+      data: { consecutiveFailures: failures, pausedUntil },
+    })
+  }
 
   async fetch(): Promise<RawJob[]> {
-    // Récupère et incrémente la page courante
-    const currentPage = await this.getAndIncrementPage()
-    console.log(`[Indeed] Scraping page ${currentPage}`)
+    const city = await this.getNextCity()
+
+    // Si en pause, on retourne un tableau vide sans lancer Chrome
+    if (!city) return []
 
     const browser = await chromium.launch({ headless: true })
     const context = await browser.newContext({
@@ -56,18 +84,17 @@ export class IndeedScraper extends BaseScraper {
     const browserPage = await context.newPage()
 
     try {
-      const url = this.buildUrl(currentPage)
-      console.log(`[Indeed] URL: ${url}`)
+      const url = `${BASE_URL}/emplois?l=${encodeURIComponent(city)}&radius=50`
+      console.log(`[Indeed] Ville: ${city} — URL: ${url}`)
 
       await browserPage.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 })
       await browserPage.waitForTimeout(3000)
 
-      // Vérifie si des offres sont présentes
       const hasJobs = await browserPage.$('.job_seen_beacon')
       if (!hasJobs) {
-        // Pas d'offres — captcha ou fin des résultats, on remet à 1
-        await this.resetPage()
+        console.log(`[Indeed] Aucune offre trouvée pour ${city}`)
         await browser.close()
+        await this.recordFailure()
         return []
       }
 
@@ -87,7 +114,7 @@ export class IndeedScraper extends BaseScraper {
 
       await browser.close()
 
-      const pageJobs: RawJob[] = jobs
+      const result: RawJob[] = jobs
         .filter(job => job.title && job.jk)
         .map(job => ({
           externalId: `indeed-${job.jk}`,
@@ -101,13 +128,14 @@ export class IndeedScraper extends BaseScraper {
           source: this.source,
         }))
 
-      console.log(`[Indeed] Page ${currentPage}: ${pageJobs.length} offres extraites`)
-      return pageJobs
+      // Succès — remet les compteurs à 0
+      await this.recordSuccess()
+      console.log(`[Indeed] ${city}: ${result.length} offres extraites`)
+      return result
 
     } catch (error) {
       await browser.close()
-      // En cas d'erreur on remet la pagination à 1
-      await this.resetPage()
+      await this.recordFailure()
       throw error
     }
   }

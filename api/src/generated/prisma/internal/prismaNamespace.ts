@@ -972,6 +972,8 @@ export const ScraperConfigScalarFieldEnum = {
   id: 'id',
   source: 'source',
   currentPage: 'currentPage',
+  consecutiveFailures: 'consecutiveFailures',
+  pausedUntil: 'pausedUntil',
   lastScrapedAt: 'lastScrapedAt'
 } as const
 

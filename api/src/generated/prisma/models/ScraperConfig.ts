@@ -28,16 +28,20 @@ export type AggregateScraperConfig = {
 
 export type ScraperConfigAvgAggregateOutputType = {
   currentPage: number | null
+  consecutiveFailures: number | null
 }
 
 export type ScraperConfigSumAggregateOutputType = {
   currentPage: number | null
+  consecutiveFailures: number | null
 }
 
 export type ScraperConfigMinAggregateOutputType = {
   id: string | null
   source: string | null
   currentPage: number | null
+  consecutiveFailures: number | null
+  pausedUntil: Date | null
   lastScrapedAt: Date | null
 }
 
@@ -45,6 +49,8 @@ export type ScraperConfigMaxAggregateOutputType = {
   id: string | null
   source: string | null
   currentPage: number | null
+  consecutiveFailures: number | null
+  pausedUntil: Date | null
   lastScrapedAt: Date | null
 }
 
@@ -52,6 +58,8 @@ export type ScraperConfigCountAggregateOutputType = {
   id: number
   source: number
   currentPage: number
+  consecutiveFailures: number
+  pausedUntil: number
   lastScrapedAt: number
   _all: number
 }
@@ -59,16 +67,20 @@ export type ScraperConfigCountAggregateOutputType = {
 
 export type ScraperConfigAvgAggregateInputType = {
   currentPage?: true
+  consecutiveFailures?: true
 }
 
 export type ScraperConfigSumAggregateInputType = {
   currentPage?: true
+  consecutiveFailures?: true
 }
 
 export type ScraperConfigMinAggregateInputType = {
   id?: true
   source?: true
   currentPage?: true
+  consecutiveFailures?: true
+  pausedUntil?: true
   lastScrapedAt?: true
 }
 
@@ -76,6 +88,8 @@ export type ScraperConfigMaxAggregateInputType = {
   id?: true
   source?: true
   currentPage?: true
+  consecutiveFailures?: true
+  pausedUntil?: true
   lastScrapedAt?: true
 }
 
@@ -83,6 +97,8 @@ export type ScraperConfigCountAggregateInputType = {
   id?: true
   source?: true
   currentPage?: true
+  consecutiveFailures?: true
+  pausedUntil?: true
   lastScrapedAt?: true
   _all?: true
 }
@@ -177,6 +193,8 @@ export type ScraperConfigGroupByOutputType = {
   id: string
   source: string
   currentPage: number
+  consecutiveFailures: number
+  pausedUntil: Date | null
   lastScrapedAt: Date | null
   _count: ScraperConfigCountAggregateOutputType | null
   _avg: ScraperConfigAvgAggregateOutputType | null
@@ -207,6 +225,8 @@ export type ScraperConfigWhereInput = {
   id?: Prisma.StringFilter<"ScraperConfig"> | string
   source?: Prisma.StringFilter<"ScraperConfig"> | string
   currentPage?: Prisma.IntFilter<"ScraperConfig"> | number
+  consecutiveFailures?: Prisma.IntFilter<"ScraperConfig"> | number
+  pausedUntil?: Prisma.DateTimeNullableFilter<"ScraperConfig"> | Date | string | null
   lastScrapedAt?: Prisma.DateTimeNullableFilter<"ScraperConfig"> | Date | string | null
 }
 
@@ -214,6 +234,8 @@ export type ScraperConfigOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
+  pausedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   lastScrapedAt?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
@@ -224,6 +246,8 @@ export type ScraperConfigWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ScraperConfigWhereInput[]
   NOT?: Prisma.ScraperConfigWhereInput | Prisma.ScraperConfigWhereInput[]
   currentPage?: Prisma.IntFilter<"ScraperConfig"> | number
+  consecutiveFailures?: Prisma.IntFilter<"ScraperConfig"> | number
+  pausedUntil?: Prisma.DateTimeNullableFilter<"ScraperConfig"> | Date | string | null
   lastScrapedAt?: Prisma.DateTimeNullableFilter<"ScraperConfig"> | Date | string | null
 }, "id" | "source">
 
@@ -231,6 +255,8 @@ export type ScraperConfigOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
+  pausedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   lastScrapedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ScraperConfigCountOrderByAggregateInput
   _avg?: Prisma.ScraperConfigAvgOrderByAggregateInput
@@ -246,6 +272,8 @@ export type ScraperConfigScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ScraperConfig"> | string
   source?: Prisma.StringWithAggregatesFilter<"ScraperConfig"> | string
   currentPage?: Prisma.IntWithAggregatesFilter<"ScraperConfig"> | number
+  consecutiveFailures?: Prisma.IntWithAggregatesFilter<"ScraperConfig"> | number
+  pausedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"ScraperConfig"> | Date | string | null
   lastScrapedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ScraperConfig"> | Date | string | null
 }
 
@@ -253,6 +281,8 @@ export type ScraperConfigCreateInput = {
   id?: string
   source: string
   currentPage?: number
+  consecutiveFailures?: number
+  pausedUntil?: Date | string | null
   lastScrapedAt?: Date | string | null
 }
 
@@ -260,6 +290,8 @@ export type ScraperConfigUncheckedCreateInput = {
   id?: string
   source: string
   currentPage?: number
+  consecutiveFailures?: number
+  pausedUntil?: Date | string | null
   lastScrapedAt?: Date | string | null
 }
 
@@ -267,6 +299,8 @@ export type ScraperConfigUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   currentPage?: Prisma.IntFieldUpdateOperationsInput | number
+  consecutiveFailures?: Prisma.IntFieldUpdateOperationsInput | number
+  pausedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastScrapedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -274,6 +308,8 @@ export type ScraperConfigUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   currentPage?: Prisma.IntFieldUpdateOperationsInput | number
+  consecutiveFailures?: Prisma.IntFieldUpdateOperationsInput | number
+  pausedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastScrapedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -281,6 +317,8 @@ export type ScraperConfigCreateManyInput = {
   id?: string
   source: string
   currentPage?: number
+  consecutiveFailures?: number
+  pausedUntil?: Date | string | null
   lastScrapedAt?: Date | string | null
 }
 
@@ -288,6 +326,8 @@ export type ScraperConfigUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   currentPage?: Prisma.IntFieldUpdateOperationsInput | number
+  consecutiveFailures?: Prisma.IntFieldUpdateOperationsInput | number
+  pausedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastScrapedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -295,6 +335,8 @@ export type ScraperConfigUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   currentPage?: Prisma.IntFieldUpdateOperationsInput | number
+  consecutiveFailures?: Prisma.IntFieldUpdateOperationsInput | number
+  pausedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastScrapedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -302,17 +344,22 @@ export type ScraperConfigCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
+  pausedUntil?: Prisma.SortOrder
   lastScrapedAt?: Prisma.SortOrder
 }
 
 export type ScraperConfigAvgOrderByAggregateInput = {
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
 }
 
 export type ScraperConfigMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
+  pausedUntil?: Prisma.SortOrder
   lastScrapedAt?: Prisma.SortOrder
 }
 
@@ -320,11 +367,14 @@ export type ScraperConfigMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
+  pausedUntil?: Prisma.SortOrder
   lastScrapedAt?: Prisma.SortOrder
 }
 
 export type ScraperConfigSumOrderByAggregateInput = {
   currentPage?: Prisma.SortOrder
+  consecutiveFailures?: Prisma.SortOrder
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -337,6 +387,8 @@ export type ScraperConfigSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   source?: boolean
   currentPage?: boolean
+  consecutiveFailures?: boolean
+  pausedUntil?: boolean
   lastScrapedAt?: boolean
 }, ExtArgs["result"]["scraperConfig"]>
 
@@ -344,6 +396,8 @@ export type ScraperConfigSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   source?: boolean
   currentPage?: boolean
+  consecutiveFailures?: boolean
+  pausedUntil?: boolean
   lastScrapedAt?: boolean
 }, ExtArgs["result"]["scraperConfig"]>
 
@@ -351,6 +405,8 @@ export type ScraperConfigSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   source?: boolean
   currentPage?: boolean
+  consecutiveFailures?: boolean
+  pausedUntil?: boolean
   lastScrapedAt?: boolean
 }, ExtArgs["result"]["scraperConfig"]>
 
@@ -358,10 +414,12 @@ export type ScraperConfigSelectScalar = {
   id?: boolean
   source?: boolean
   currentPage?: boolean
+  consecutiveFailures?: boolean
+  pausedUntil?: boolean
   lastScrapedAt?: boolean
 }
 
-export type ScraperConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "currentPage" | "lastScrapedAt", ExtArgs["result"]["scraperConfig"]>
+export type ScraperConfigOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "currentPage" | "consecutiveFailures" | "pausedUntil" | "lastScrapedAt", ExtArgs["result"]["scraperConfig"]>
 
 export type $ScraperConfigPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ScraperConfig"
@@ -370,6 +428,8 @@ export type $ScraperConfigPayload<ExtArgs extends runtime.Types.Extensions.Inter
     id: string
     source: string
     currentPage: number
+    consecutiveFailures: number
+    pausedUntil: Date | null
     lastScrapedAt: Date | null
   }, ExtArgs["result"]["scraperConfig"]>
   composites: {}
@@ -797,6 +857,8 @@ export interface ScraperConfigFieldRefs {
   readonly id: Prisma.FieldRef<"ScraperConfig", 'String'>
   readonly source: Prisma.FieldRef<"ScraperConfig", 'String'>
   readonly currentPage: Prisma.FieldRef<"ScraperConfig", 'Int'>
+  readonly consecutiveFailures: Prisma.FieldRef<"ScraperConfig", 'Int'>
+  readonly pausedUntil: Prisma.FieldRef<"ScraperConfig", 'DateTime'>
   readonly lastScrapedAt: Prisma.FieldRef<"ScraperConfig", 'DateTime'>
 }
     

@@ -20,17 +20,10 @@ async function runDailyScraping() {
 }
 
 export function startScraperCron() {
-  // Scraping à 8h
-  cron.schedule('0 8 * * *', () => {
-    console.log('[Cron] 8h — scraping du matin')
+  cron.schedule('0 */2 * * *', () => {
+    console.log('[Cron] Scraping automatique')
     runDailyScraping()
   })
 
-  // Scraping à 18h
-  cron.schedule('0 18 * * *', () => {
-    console.log('[Cron] 18h — scraping du soir')
-    runDailyScraping()
-  })
-
-  console.log('[Cron] Scraper cron démarré (8h et 18h)')
+  console.log('[Cron] Scraper cron démarré (toutes les 2h)')
 }
