@@ -5,11 +5,11 @@ import { runScrapers } from '../scrapers'
 
 const router = Router()
 
-// GET /jobs?page=1 — DOIT être avant /:id
 router.get('/', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const page = parseInt(req.query.page as string) || 1
-    const result = await jobsService.getJobs(req.user!.userId, page)
+    const source = req.query.source as string | undefined
+    const result = await jobsService.getJobs(req.user!.userId, page, source)
     const { jobs, pagination } = result
     res.json({ result: true, jobs, pagination })
   } catch (error: any) {
@@ -17,7 +17,6 @@ router.get('/', authMiddleware, async (req: AuthRequest, res: Response): Promise
   }
 })
 
-// GET /jobs/:id — après la route /
 router.get('/:id', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const id = req.params.id as string
@@ -32,7 +31,6 @@ router.get('/:id', authMiddleware, async (req: AuthRequest, res: Response): Prom
   }
 })
 
-// PATCH /jobs/:id/status
 router.patch('/:id/status', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { status } = req.body
@@ -49,7 +47,6 @@ router.patch('/:id/status', authMiddleware, async (req: AuthRequest, res: Respon
   }
 })
 
-// DELETE /jobs/:id
 router.delete('/:id', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const id = req.params.id as string
@@ -60,7 +57,6 @@ router.delete('/:id', authMiddleware, async (req: AuthRequest, res: Response): P
   }
 })
 
-// POST /jobs/scrape
 router.post('/scrape', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     await runScrapers(req.user!.userId)
