@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useFetch } from '../hooks/useFetch'
+import { useAuth } from '../context/auth.context'
 import Link from 'next/link'
 
 interface JobOffer {
@@ -37,6 +38,7 @@ const interviewTypeLabel: Record<string, string> = {
 }
 
 export default function ApplicationsPage() {
+  const { signout } = useAuth()
   const { fetchWithAuth } = useFetch()
   const [applications, setApplications] = useState<Application[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -71,17 +73,23 @@ export default function ApplicationsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-white flex flex-col">
+      <header className="border-b px-6 py-4 flex items-center justify-between">
         <h1 className="text-xl font-bold">Esperanza</h1>
         <nav className="flex gap-4 text-sm">
           <Link href="/dashboard" className="text-gray-500 hover:text-black">Offres</Link>
           <Link href="/applications" className="font-medium">Candidatures</Link>
-          <Link href="/settings" className="text-gray-500 hover:text-black">Paramètres</Link>
+          <Link href="/settings" className="text-gray-500 hover:text-black">Filtres</Link>
         </nav>
+        <button
+            onClick={signout}
+            className="border px-4 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors"
+          >
+            Déconnexion
+          </button>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-4xl mx-auto px-6 py-8 flex-1 w-full flex flex-col">
         {error && (
           <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
@@ -91,7 +99,7 @@ export default function ApplicationsPage() {
         {isLoading ? (
           <div className="text-center py-20 text-gray-400">Chargement...</div>
         ) : applications.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
+          <div className="flex flex-1 items-center justify-center text-gray-500">
             Aucune candidature — postule à des offres depuis le dashboard
           </div>
         ) : (
@@ -156,6 +164,26 @@ export default function ApplicationsPage() {
           </div>
         )}
       </main>
+      <footer className="border-t mt-8 py-4 px-6 flex flex-col items-center gap-1 text-sm">
+        <span>© {new Date().getFullYear()} Esperanza — Créé par{' '} 
+          <a
+            href='https://www.cedric-auneau.dev'
+            target='_blank'
+            className="underline hover:text-blue-500 transition-colors"
+            aria-label='Portfolio'
+          >
+            Cédric Auneau
+          </a>
+        </span>
+        <a
+          href="/mentions-legales"
+          target='_blank'
+          className="underline hover:text-blue-500 transition-colors"
+          aria-label="Mentions légales"
+        >
+          Mentions légales
+        </a>
+      </footer>
     </div>
   )
 }

@@ -105,41 +105,15 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-white">
+      <header className="border-b px-6 py-4 flex items-center justify-between">
         <h1 className="text-xl font-bold">Esperanza</h1>
         <nav className="flex gap-4 text-sm">
           <Link href="/dashboard" className="font-medium">Offres</Link>
           <Link href="/applications" className="text-gray-500 hover:text-black">Candidatures</Link>
           <Link href="/settings" className="text-gray-500 hover:text-black">Filtres</Link>
         </nav>
-        <select
-          value={sourceFilter}
-          onChange={e => {
-            setSourceFilter(e.target.value)
-            setCurrentPage(1)
-          }}
-          className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
-        >
-          <option value="all">Toutes les sources</option>
-          <option value="francetravail">France Travail</option>
-          <option value="indeed">Indeed</option>
-        </select>
         <div className="flex gap-3">
-          <button
-            onClick={handleScrape}
-            disabled={isScraping}
-            className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors flex items-center gap-2"
-          >
-            {isScraping ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Scraping...
-              </>
-            ) : (
-              "Recherche d'offres"
-            )}
-          </button>
           <button
             onClick={signout}
             className="border px-4 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors"
@@ -149,18 +123,52 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 py-8">
+        {/* Bouton recherche centré */}
+        <div className="flex justify-center py-6 bg-white">
+          <button
+            onClick={handleScrape}
+            disabled={isScraping}
+            className="bg-black text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors flex items-center gap-2"
+          >
+            {isScraping ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Recherche en cours...
+              </>
+            ) : (
+              "Recherche de nouvelles offres"
+            )}
+          </button>
+        </div>
+
+      <main className="max-w-5xl mx-auto px-6">
         {error && (
           <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
           </div>
         )}
 
-        {pagination && (
-          <p className="text-gray-500 text-sm mb-6">
-            {pagination.total} offres — page {pagination.page} / {pagination.totalPages}
-          </p>
-        )}
+        {/* Compteur et filtre source sur la même ligne */}
+        <div className="flex items-center justify-between mb-4">
+          {pagination ? (
+            <p className="text-gray-500 text-sm">
+              {pagination.total} offres — page {pagination.page} / {pagination.totalPages}
+            </p>
+          ) : <div />}
+          <select
+            value={sourceFilter}
+            onChange={e => {
+              setSourceFilter(e.target.value)
+              setCurrentPage(1)
+            }}
+            className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+          >
+            <option value="all">Toutes les sources</option>
+            <option value="francetravail">France Travail</option>
+            <option value="indeed">Indeed</option>
+          </select>
+        </div>
+
 
         {isLoading ? (
           <div className="text-center py-20 text-gray-400">Chargement...</div>
@@ -168,7 +176,7 @@ export default function Dashboard() {
           <div className="flex flex-col gap-4">
             {jobs.length === 0 ? (
               <div className="text-center py-20 text-gray-400">
-                Aucune offre — lance un scraping pour commencer
+                Aucune offre — lance une recherche pour commencer
               </div>
             ) : (
               jobs.map(job => (
@@ -213,7 +221,7 @@ export default function Dashboard() {
         )}
 
         {pagination && pagination.totalPages > 1 && (
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 mt-8 mb-8">
             <button
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1}
@@ -234,6 +242,26 @@ export default function Dashboard() {
           </div>
         )}
       </main>
+      <footer className="border-t mt-8 py-4 px-6 flex flex-col items-center gap-1 text-sm">
+        <span>© {new Date().getFullYear()} Esperanza — Créé par{' '} 
+          <a
+            href='https://www.cedric-auneau.dev'
+            target='_blank'
+            className="underline hover:text-blue-500 transition-colors"
+            aria-label='Portfolio'
+          >
+            Cédric Auneau
+          </a>
+        </span>
+        <a
+          href="/mentions-legales"
+          target='_blank'
+          className="underline hover:text-blue-500 transition-colors"
+          aria-label="Mentions légales"
+        >
+          Mentions légales
+        </a>
+      </footer>
     </div>
   )
 }
