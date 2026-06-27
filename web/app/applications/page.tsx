@@ -57,6 +57,19 @@ export default function ApplicationsPage() {
     load()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleDelete = async (applicationId: string, jobOfferId: string) => {
+    if (!confirm('Supprimer cette candidature ?')) return
+    try {
+      await fetchWithAuth(`/applications/${applicationId}`, {
+        method: 'DELETE',
+        body: JSON.stringify({ jobOfferId }),
+      })
+      setApplications(prev => prev.filter(app => app.id !== applicationId))
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
@@ -99,11 +112,19 @@ export default function ApplicationsPage() {
                     </a>
                     <p className="text-gray-600 text-sm mt-1">{app.jobOffer.company} — {app.jobOffer.location}</p>
                   </div>
-                  <div className="text-right text-xs text-gray-400 shrink-0">
-                    <p>Postulée le {new Date(app.appliedAt).toLocaleDateString('fr-FR')}</p>
-                    <p className={app.followUpSent ? 'text-green-500' : 'text-orange-400'}>
-                      Relance {app.followUpSent ? 'envoyée' : `le ${new Date(app.followUpAt).toLocaleDateString('fr-FR')}`}
-                    </p>
+                  <div className="flex items-start gap-3">
+                    <div className="text-right text-xs text-gray-400 shrink-0">
+                      <p>Postulée le {new Date(app.appliedAt).toLocaleDateString('fr-FR')}</p>
+                      <p className={app.followUpSent ? 'text-green-500' : 'text-orange-400'}>
+                        Relance {app.followUpSent ? 'envoyée' : `le ${new Date(app.followUpAt).toLocaleDateString('fr-FR')}`}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => handleDelete(app.id, app.jobOfferId)}
+                      className="text-xs text-red-400 hover:text-red-600 border border-red-200 hover:border-red-400 px-2 py-1 rounded-lg transition-colors shrink-0"
+                    >
+                      Supprimer
+                    </button>
                   </div>
                 </div>
 
