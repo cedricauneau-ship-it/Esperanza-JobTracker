@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import 'dotenv/config'
 import usersRouter from './users/users.router'
 import jobsRouter from './jobs/jobs.router'
@@ -9,9 +10,14 @@ import { startAllCrons } from './cron'
 
 const app = express()
 
+// Autorise les requêtes depuis le frontend Next.js
+app.use(cors({
+  origin: ['http://localhost:3001', 'http://localhost:3000'],
+  credentials: true,
+}))
+
 app.use(express.json())
 
-// Routes
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' })
 })

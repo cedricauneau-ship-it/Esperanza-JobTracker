@@ -5,17 +5,19 @@ import { runScrapers } from '../scrapers'
 
 const router = Router()
 
-// GET /jobs
+// GET /jobs?page=1 — DOIT être avant /:id
 router.get('/', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const jobs = await jobsService.getJobs(req.user!.userId)
-    res.json({ result: true, jobs })
+    const page = parseInt(req.query.page as string) || 1
+    const result = await jobsService.getJobs(req.user!.userId, page)
+    const { jobs, pagination } = result
+    res.json({ result: true, jobs, pagination })
   } catch (error: any) {
     res.status(500).json({ result: false, error: error.message })
   }
 })
 
-// GET /jobs/:id
+// GET /jobs/:id — après la route /
 router.get('/:id', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const id = req.params.id as string
@@ -25,20 +27,6 @@ router.get('/:id', authMiddleware, async (req: AuthRequest, res: Response): Prom
       return
     }
     res.json({ result: true, job })
-  } catch (error: any) {
-    res.status(500).json({ result: false, error: error.message })
-  }
-})
-
-// GET /jobs?page=1
-// Retourne les offres de l'utilisateur paginées par 30
-// Si l'utilisateur a des filtres configurés, ils sont appliqués automatiquement
-// Ex: GET /jobs?page=2 pour la page 2
-router.get('/', authMiddleware, async (req: AuthRequest, res: Response): Promise<void> => {
-  try {
-    const page = parseInt(req.query.page as string) || 1
-    const result = await jobsService.getJobs(req.user!.userId, page)
-    res.json({ result: true, jobs: result.jobs, pagination: result.pagination })
   } catch (error: any) {
     res.status(500).json({ result: false, error: error.message })
   }

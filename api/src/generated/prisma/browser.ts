@@ -42,3 +42,8 @@ export type Application = Prisma.ApplicationModel
  * 
  */
 export type Interview = Prisma.InterviewModel
+/**
+ * Model ScraperConfig
+ * 
+ */
+export type ScraperConfig = Prisma.ScraperConfigModel

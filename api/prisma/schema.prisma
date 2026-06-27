@@ -87,3 +87,10 @@ model Interview {
   type          String
   notes         String?
 }
+
+model ScraperConfig {
+  id            String    @id @default(uuid())
+  source        String    @unique // "indeed", "francetravail"
+  currentPage   Int       @default(1)
+  lastScrapedAt DateTime?
+}

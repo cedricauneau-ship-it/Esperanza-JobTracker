@@ -388,7 +388,8 @@ export const ModelName = {
   JobOffer: 'JobOffer',
   UserFilters: 'UserFilters',
   Application: 'Application',
-  Interview: 'Interview'
+  Interview: 'Interview',
+  ScraperConfig: 'ScraperConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "jobOffer" | "userFilters" | "application" | "interview"
+    modelProps: "user" | "jobOffer" | "userFilters" | "application" | "interview" | "scraperConfig"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ScraperConfig: {
+      payload: Prisma.$ScraperConfigPayload<ExtArgs>
+      fields: Prisma.ScraperConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScraperConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScraperConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.ScraperConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScraperConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>
+        }
+        findMany: {
+          args: Prisma.ScraperConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>[]
+        }
+        create: {
+          args: Prisma.ScraperConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>
+        }
+        createMany: {
+          args: Prisma.ScraperConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ScraperConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.ScraperConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>
+        }
+        update: {
+          args: Prisma.ScraperConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScraperConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScraperConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ScraperConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.ScraperConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScraperConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.ScraperConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScraperConfig>
+        }
+        groupBy: {
+          args: Prisma.ScraperConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScraperConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScraperConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScraperConfigCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -891,6 +966,16 @@ export const InterviewScalarFieldEnum = {
 } as const
 
 export type InterviewScalarFieldEnum = (typeof InterviewScalarFieldEnum)[keyof typeof InterviewScalarFieldEnum]
+
+
+export const ScraperConfigScalarFieldEnum = {
+  id: 'id',
+  source: 'source',
+  currentPage: 'currentPage',
+  lastScrapedAt: 'lastScrapedAt'
+} as const
+
+export type ScraperConfigScalarFieldEnum = (typeof ScraperConfigScalarFieldEnum)[keyof typeof ScraperConfigScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1100,6 +1185,7 @@ export type GlobalOmitConfig = {
   userFilters?: Prisma.UserFiltersOmit
   application?: Prisma.ApplicationOmit
   interview?: Prisma.InterviewOmit
+  scraperConfig?: Prisma.ScraperConfigOmit
 }
 
 /* Types for Logging */

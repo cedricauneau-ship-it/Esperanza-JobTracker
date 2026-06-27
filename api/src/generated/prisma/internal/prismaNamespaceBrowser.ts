@@ -55,7 +55,8 @@ export const ModelName = {
   JobOffer: 'JobOffer',
   UserFilters: 'UserFilters',
   Application: 'Application',
-  Interview: 'Interview'
+  Interview: 'Interview',
+  ScraperConfig: 'ScraperConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -148,6 +149,16 @@ export const InterviewScalarFieldEnum = {
 } as const
 
 export type InterviewScalarFieldEnum = (typeof InterviewScalarFieldEnum)[keyof typeof InterviewScalarFieldEnum]
+
+
+export const ScraperConfigScalarFieldEnum = {
+  id: 'id',
+  source: 'source',
+  currentPage: 'currentPage',
+  lastScrapedAt: 'lastScrapedAt'
+} as const
+
+export type ScraperConfigScalarFieldEnum = (typeof ScraperConfigScalarFieldEnum)[keyof typeof ScraperConfigScalarFieldEnum]
 
 
 export const SortOrder = {
