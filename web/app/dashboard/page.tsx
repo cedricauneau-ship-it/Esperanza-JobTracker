@@ -52,6 +52,7 @@ export default function Dashboard() {
   const [error, setError] = useState('')
   const [isScraping, setIsScraping] = useState(false)
   const [sourceFilter, setSourceFilter] = useState<string>('all')
+  const [dateFilter, setDateFilter] = useState<string>('all')
 
   useEffect(() => {
     const load = async () => {
@@ -60,6 +61,7 @@ export default function Dashboard() {
       try {
         const params = new URLSearchParams({ page: currentPage.toString() })
         if (sourceFilter !== 'all') params.append('source', sourceFilter)
+        if (dateFilter !== 'all') params.append('days', dateFilter)
         const data = await fetchWithAuth(`/jobs?${params.toString()}`)
         setJobs(data.jobs || [])
         setPagination(data.pagination || null)
@@ -70,7 +72,7 @@ export default function Dashboard() {
       }
     }
     load()
-  }, [currentPage, sourceFilter]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentPage, sourceFilter, dateFilter]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleScrape = async () => {
     setIsScraping(true)
@@ -108,7 +110,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-white">
       <header className="border-b px-6 py-4 flex items-center justify-between">
         <h1 className="text-xl font-bold">Esperanza</h1>
-        <nav className="flex gap-4 text-sm">
+        <nav className="flex gap-12 text-sm">
           <Link href="/dashboard" className="font-medium">Offres</Link>
           <Link href="/applications" className="text-gray-500 hover:text-black">Candidatures</Link>
           <Link href="/settings" className="text-gray-500 hover:text-black">Filtres</Link>
@@ -163,12 +165,48 @@ export default function Dashboard() {
             }}
             className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
           >
-            <option value="all">Toutes les sources</option>
+            <option value="all">Toutes les offres</option>
             <option value="francetravail">France Travail</option>
             <option value="indeed">Indeed</option>
           </select>
         </div>
 
+        {pagination && pagination.totalPages > 1 && (
+          <div className='flex justify-center gap-10 mb-6'>
+            <div className="flex justify-center gap-1">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border rounded-lg text-sm disabled:opacity-50 hover:bg-gray-50"
+              >
+                Précédent
+              </button>
+              <span className="px-4 py-2 text-sm text-gray-500">
+                {currentPage} / {pagination.totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(p => Math.min(pagination.totalPages, p + 1))}
+                disabled={currentPage === pagination.totalPages}
+                className="px-4 py-2 border rounded-lg text-sm disabled:opacity-50 hover:bg-gray-50"
+              >
+                Suivant
+              </button>
+            </div>
+              <select
+                value={dateFilter}
+                onChange={e => {
+                  setDateFilter(e.target.value)
+                  setCurrentPage(1)
+                }}
+                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              >
+                <option value="7">7 derniers jours</option>
+                <option value="14">14 derniers jours</option>
+                <option value="30">30 derniers jours</option>
+                <option value="all">Toutes les dates</option>
+              </select>
+          </div>  
+        )}
 
         {isLoading ? (
           <div className="text-center py-20 text-gray-400">Chargement...</div>
@@ -199,6 +237,9 @@ export default function Dashboard() {
                           <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">{job.salary}</span>
                         )}
                         <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">{job.source}</span>
+                        <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
+                          {new Date(job.publishedAt).toLocaleDateString('fr-FR')}
+                        </span>
                       </div>
                     </div>
                     <select

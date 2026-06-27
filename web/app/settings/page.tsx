@@ -100,10 +100,10 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
         <h1 className="text-xl font-bold">Esperanza</h1>
-        <nav className="flex gap-4 text-sm">
+        <nav className="flex gap-12 text-sm">
           <Link href="/dashboard" className="text-gray-500 hover:text-black">Offres</Link>
           <Link href="/applications" className="text-gray-500 hover:text-black">Candidatures</Link>
-          <Link href="/settings" className="font-medium">Paramètres</Link>
+          <Link href="/settings" className="font-medium">Filtres</Link>
         </nav>
         <button
           onClick={handleSignout}
