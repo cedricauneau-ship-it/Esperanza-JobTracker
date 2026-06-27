@@ -2,6 +2,7 @@ import { prisma } from '../prisma/prisma.service'
 import { getUserFilters } from '../filters/filters.service'
 import { FranceTravailScraper } from './francetravail/francetravail.scraper'
 import { IndeedScraper } from './indeed/indeed.scraper'
+import { LaBonneAlternanceScraper } from './labonnealternance/labonnealternance.scraper'
 
 async function runScrapers(userId: string) {
   const userFilters = await getUserFilters(userId)
@@ -9,6 +10,7 @@ async function runScrapers(userId: string) {
   const scrapers = [
     new FranceTravailScraper(userFilters),
     new IndeedScraper(),
+    new LaBonneAlternanceScraper(userFilters),
   ]
 
   for (const scraper of scrapers) {
