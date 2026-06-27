@@ -51,13 +51,16 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   const [isScraping, setIsScraping] = useState(false)
+  const [sourceFilter, setSourceFilter] = useState<string>('all')
 
   useEffect(() => {
     const load = async () => {
       setIsLoading(true)
       setError('')
       try {
-        const data = await fetchWithAuth(`/jobs?page=${currentPage}`)
+        const params = new URLSearchParams({ page: currentPage.toString() })
+        if (sourceFilter !== 'all') params.append('source', sourceFilter)
+        const data = await fetchWithAuth(`/jobs?${params.toString()}`)
         setJobs(data.jobs || [])
         setPagination(data.pagination || null)
       } catch (err: unknown) {
@@ -67,12 +70,18 @@ export default function Dashboard() {
       }
     }
     load()
-  }, [currentPage]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentPage, sourceFilter]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleScrape = async () => {
     setIsScraping(true)
     try {
       await fetchWithAuth('/jobs/scrape', { method: 'POST' })
+      // Recharge les offres après le scraping
+      const params = new URLSearchParams({ page: '1' })
+      if (sourceFilter !== 'all') params.append('source', sourceFilter)
+      const data = await fetchWithAuth(`/jobs?${params.toString()}`)
+      setJobs(data.jobs || [])
+      setPagination(data.pagination || null)
       setCurrentPage(1)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue')
@@ -104,6 +113,18 @@ export default function Dashboard() {
           <Link href="/applications" className="text-gray-500 hover:text-black">Candidatures</Link>
           <Link href="/settings" className="text-gray-500 hover:text-black">Filtres</Link>
         </nav>
+        <select
+          value={sourceFilter}
+          onChange={e => {
+            setSourceFilter(e.target.value)
+            setCurrentPage(1)
+          }}
+          className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+        >
+          <option value="all">Toutes les sources</option>
+          <option value="francetravail">France Travail</option>
+          <option value="indeed">Indeed</option>
+        </select>
         <div className="flex gap-3">
           <button
             onClick={handleScrape}
@@ -116,7 +137,7 @@ export default function Dashboard() {
                 Scraping...
               </>
             ) : (
-              'Scraper les offres'
+              "Recherche d'offres"
             )}
           </button>
           <button
