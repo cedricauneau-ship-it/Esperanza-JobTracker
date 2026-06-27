@@ -66,6 +66,10 @@ export const updateApplication = async (id: string, notes: string) => {
 
 // Supprime une candidature et remet l'offre en "to_review"
 export const deleteApplication = async (id: string, jobOfferId: string) => {
+  // Supprime d'abord les entretiens liés à la candidature
+  await prisma.interview.deleteMany({ where: { applicationId: id } })
+
+  // Remet l'offre en "to_review"
   await prisma.jobOffer.update({
     where: { id: jobOfferId },
     data: { status: 'to_review' },
