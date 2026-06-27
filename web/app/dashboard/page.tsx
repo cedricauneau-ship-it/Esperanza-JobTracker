@@ -165,9 +165,10 @@ export default function Dashboard() {
             }}
             className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
           >
-            <option value="all">Toutes les offres</option>
+            <option value="all">Toutes les sources</option>
             <option value="francetravail">France Travail</option>
             <option value="indeed">Indeed</option>
+            <option value="labonnealternance">La Bonne Alternance</option>
           </select>
         </div>
 
