@@ -11,68 +11,63 @@ export const getJobs = async (userId: string, page: number = 1, source?: string,
 
   const userFilters = await getUserFilters(userId)
 
-  // Construit les conditions Prisma depuis les filtres utilisateur
-  // au lieu de filtrer en mémoire après avoir tout chargé
   const where: any = {
     status: { not: 'ignored' },
     ...(source && source !== 'all' ? { source } : {}),
     ...(dateFilter ? { publishedAt: { gte: dateFilter } } : {}),
-    // Stacks/mots-clés requis
-    ...(userFilters?.requiredStacks?.length ? {
-      OR: userFilters.requiredStacks.map(stack => ({
-        OR: [
-          { title: { contains: stack, mode: 'insensitive' } },
-          { description: { contains: stack, mode: 'insensitive' } },
-        ]
-      }))
-    } : {}),
-    // Stacks exclues
-    ...(userFilters?.excludedStacks?.length ? {
-      AND: userFilters.excludedStacks.map(stack => ({
-        AND: [
-          { title: { not: { contains: stack, mode: 'insensitive' } } },
-          { description: { not: { contains: stack, mode: 'insensitive' } } },
-        ]
-      }))
-    } : {}),
-    // Mots-clés exclus
-    ...(userFilters?.excludedKeywords?.length ? {
-      AND: [
-        ...(userFilters?.excludedStacks?.length ? userFilters.excludedStacks.map(stack => ({
-          AND: [
-            { title: { not: { contains: stack, mode: 'insensitive' } } },
-            { description: { not: { contains: stack, mode: 'insensitive' } } },
-          ]
-        })) : []),
-        ...userFilters.excludedKeywords.map(keyword => ({
-          AND: [
-            { title: { not: { contains: keyword, mode: 'insensitive' } } },
-            { description: { not: { contains: keyword, mode: 'insensitive' } } },
-          ]
-        }))
-      ]
-    } : {}),
-    // Entreprises exclues
-    ...(userFilters?.excludedCompanies?.length ? {
-      company: {
-        notIn: userFilters.excludedCompanies,
-        mode: 'insensitive'
-      }
-    } : {}),
-    // Télétravail uniquement
-    ...(userFilters?.remoteOnly ? { remote: { not: 'none' } } : {}),
   }
 
-  // Compte le total AVANT de paginer — une seule requête légère
+  // Stacks requises — au moins une doit être présente
+  if (userFilters?.requiredStacks?.length) {
+    where.OR = userFilters.requiredStacks.flatMap(stack => [
+      { title: { contains: stack, mode: 'insensitive' } },
+      { description: { contains: stack, mode: 'insensitive' } },
+    ])
+  }
+
+  // Stacks exclues
+  if (userFilters?.excludedStacks?.length) {
+    where.NOT = [
+      ...userFilters.excludedStacks.flatMap(stack => [
+        { title: { contains: stack, mode: 'insensitive' } },
+        { description: { contains: stack, mode: 'insensitive' } },
+      ])
+    ]
+  }
+
+  // Mots-clés exclus — ajoutés au NOT existant
+  if (userFilters?.excludedKeywords?.length) {
+    where.NOT = [
+      ...(where.NOT || []),
+      ...userFilters.excludedKeywords.flatMap(keyword => [
+        { title: { contains: keyword, mode: 'insensitive' } },
+        { description: { contains: keyword, mode: 'insensitive' } },
+      ])
+    ]
+  }
+
+  // Entreprises exclues
+  if (userFilters?.excludedCompanies?.length) {
+    where.NOT = [
+      ...(where.NOT || []),
+      ...userFilters.excludedCompanies.map(company => ({
+        company: { contains: company, mode: 'insensitive' }
+      }))
+    ]
+  }
+
+  // Télétravail uniquement
+  if (userFilters?.remoteOnly) {
+    where.remote = { not: 'none' }
+  }
+
   const total = await prisma.jobOffer.count({ where })
 
-  // Récupère uniquement la page demandée — pas tout en mémoire
   const jobs = await prisma.jobOffer.findMany({
     where,
     orderBy: { publishedAt: 'desc' },
     skip: offset,
     take: limit,
-    // Ne sélectionne pas la description pour alléger l'egress
     select: {
       id: true,
       externalId: true,
