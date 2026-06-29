@@ -5,9 +5,8 @@ import { prisma } from '../../prisma/prisma.service'
 const BASE_URL = 'https://fr.indeed.com'
 
 const CITIES = [
-  'Paris', 'Lyon', 'Marseille', 'Toulouse', 'Bordeaux',
-  'Nantes', 'Strasbourg', 'Lille', 'Rennes', 'Nice',
-  'Montpellier', 'Grenoble', 'Rouen', 'Toulon', 'Saint-Étienne'
+  'Paris', 'Toulouse', 'Bordeaux', 'Jarnac',
+  'Montpellier', 'Toulon', 'La Rochelle'
 ]
 
 const MAX_CONSECUTIVE_FAILURES = 3
